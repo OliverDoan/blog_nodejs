@@ -4,8 +4,13 @@ const app = express()
 const port = 3000
 const exphbs = require('express-handlebars')
 const hbs = exphbs.create( { extname: '.hbs'})
-var path = require('path'); 
-app.use(morgan('combined'))
+const path = require('path'); 
+
+
+
+// Use static folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.engine('hbs', hbs.engine )
 app.set('view engine', 'hbs');
