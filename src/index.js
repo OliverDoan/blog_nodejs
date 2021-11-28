@@ -3,9 +3,11 @@ const morgan = require('morgan');
 const app = express();
 const port = 3000;
 const exphbs = require('express-handlebars');
-const hbs = exphbs.create({ extname: '.hbs' });
+const hbs = exphbs.create({ extname: '.hbs',helpers: {
+  sum: (a, b) => a + b,
+}, });
 const path = require('path');
-
+const methodOverride = require('method-override');
 const db = require('./config/db');
 // Connect to DB
 db.connect();
@@ -20,7 +22,7 @@ app.use(
   }),
 );
 app.use(express.json());
-
+app.use(methodOverride('_method'));
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
